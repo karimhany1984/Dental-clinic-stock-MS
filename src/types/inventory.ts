@@ -17,6 +17,7 @@ export interface DentalInventoryItem {
   minQty: number;
   category?: DentalCategory;
   lotNumber?: string; // رقم التشغيلة / الدفعة
+  barcode?: string; // الباركود أو رمز QR للمنتج
   location?: string; // مكان الحفظ (ثلاجة، خزانة، غرفة التعقيم)
   unit?: ItemUnit;
   notes?: string;

@@ -16,6 +16,7 @@ export const SAMPLE_DENTAL_INVENTORY: DentalInventoryItem[] = [
     minQty: 3,
     category: 'حشوات وترميم',
     lotNumber: 'FL-2024-88',
+    barcode: '4005808123456',
     location: 'خزانة الحشوات C1',
     unit: 'حقنة / كاربول',
     notes: 'لون A2 الأكثر طلباً للأسنان الأمامية والخلفية',
@@ -28,6 +29,7 @@ export const SAMPLE_DENTAL_INVENTORY: DentalInventoryItem[] = [
     minQty: 4, // Low stock
     category: 'حشوات وترميم',
     lotNumber: 'FLW-901',
+    barcode: '4005808987654',
     location: 'خزانة الحشوات C1',
     unit: 'حقنة / كاربول',
     notes: 'كمية منخفضة وقريب الانتهاء - يُرجى إعادة الطلب',
@@ -40,6 +42,7 @@ export const SAMPLE_DENTAL_INVENTORY: DentalInventoryItem[] = [
     minQty: 10,
     category: 'تخدير وجراحة',
     lotNumber: 'SP-77402',
+    barcode: '3401560123459',
     location: 'ثلاجة الأدوية التحتية',
     unit: 'علبة',
     notes: 'تحتوي العلبة على 50 كاربولة - يجب حفظها بدرجة حرارة أقل من 25°',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Filter, ArrowUpDown, X } from 'lucide-react';
+import { Search, Filter, ArrowUpDown, X, QrCode } from 'lucide-react';
 import { DentalCategory, FilterStatus } from '../types/inventory';
 
 interface FilterBarProps {
@@ -12,6 +12,7 @@ interface FilterBarProps {
   sortBy: string;
   onSortByChange: (sortBy: string) => void;
   itemCount: number;
+  onOpenScanner?: () => void;
 }
 
 const CATEGORIES: string[] = [
@@ -35,29 +36,43 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   sortBy,
   onSortByChange,
   itemCount,
+  onOpenScanner,
 }) => {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-4 mb-4 shadow-xs no-print">
       <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
         
-        {/* Search Input */}
+        {/* Search Input with Barcode Scan Button */}
         <div className="relative flex-1 min-w-[240px]">
           <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="بحث بالاسم، رقم الدفعة (Lot #)، أو مكان التخزين..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl pr-10 pl-9 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 outline-none transition"
+            placeholder="بحث بالاسم، رقم الدفعة (Lot #)، مكان التخزين، أو الباركود..."
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl pr-10 pl-16 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 outline-none transition"
           />
-          {searchQuery && (
-            <button
-              onClick={() => onSearchChange('')}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
+          <div className="absolute left-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
+            {searchQuery && (
+              <button
+                onClick={() => onSearchChange('')}
+                className="text-slate-400 hover:text-slate-600 p-1"
+                title="مسح البحث"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+            {onOpenScanner && (
+              <button
+                type="button"
+                onClick={onOpenScanner}
+                className="w-6 h-6 flex items-center justify-center rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-600 transition"
+                title="مسح باركود بالهاتف للبحث الفوري"
+              >
+                <QrCode className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Status Segmented Buttons */}

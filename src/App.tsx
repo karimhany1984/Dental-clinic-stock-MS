@@ -11,6 +11,7 @@ import { QuickAddForm } from './components/QuickAddForm';
 import { FilterBar } from './components/FilterBar';
 import { InventoryTable } from './components/InventoryTable';
 import { ItemModal } from './components/ItemModal';
+import { BarcodeScannerModal } from './components/BarcodeScannerModal';
 import { AuditReportPrint } from './components/AuditReportPrint';
 import { DentalInventoryItem, FilterStatus } from './types/inventory';
 import { SAMPLE_DENTAL_INVENTORY } from './data/sampleDentalData';
@@ -45,6 +46,7 @@ export default function App() {
 
   // Modals
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<DentalInventoryItem | null>(null);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' } | null>(null);
 
@@ -198,9 +200,34 @@ export default function App() {
     );
   };
 
+  const handleRegisterNewItemWithBarcode = (barcodeData: {
+    barcode: string;
+    lotNumber?: string;
+    expiry?: string;
+    name?: string;
+  }) => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 1);
+    const defaultExp = d.toISOString().split('T')[0];
+
+    setEditingItem({
+      id: 0,
+      name: barcodeData.name || '',
+      barcode: barcodeData.barcode,
+      lotNumber: barcodeData.lotNumber || '',
+      expiry: barcodeData.expiry || defaultExp,
+      qty: 1,
+      minQty: 3,
+      category: 'حشوات وترميم',
+      unit: 'عبوة',
+    });
+    setIsModalOpen(true);
+    showToast(`تم استيراد بيانات الباركود (${barcodeData.barcode}) بنجاح`);
+  };
+
   const handleExportCSV = () => {
     let csvContent = '\uFEFF'; // UTF-8 BOM for Arabic support in Excel
-    csvContent += 'اسم الصنف,التصنيف,الكمية المتوفرة,الوحدة,تاريخ انتهاء الصلاحية,الحد الأدنى,رقم التشغيلة (Lot #),مكان الحفظ,حالة الصلاحية,ملاحظات\n';
+    csvContent += 'اسم الصنف,التصنيف,الكمية المتوفرة,الوحدة,تاريخ انتهاء الصلاحية,الحد الأدنى,الباركود,رقم التشغيلة (Lot #),مكان الحفظ,حالة الصلاحية,ملاحظات\n';
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -218,7 +245,7 @@ export default function App() {
       const cleanNotes = `"${(item.notes || '').replace(/"/g, '""')}"`;
       const cleanLoc = `"${(item.location || '').replace(/"/g, '""')}"`;
 
-      csvContent += `${cleanName},${item.category || ''},${item.qty},${item.unit || ''},${item.expiry},${item.minQty},${item.lotNumber || ''},${cleanLoc},${statusStr},${cleanNotes}\n`;
+      csvContent += `${cleanName},${item.category || ''},${item.qty},${item.unit || ''},${item.expiry},${item.minQty},${item.barcode || ''},${item.lotNumber || ''},${cleanLoc},${statusStr},${cleanNotes}\n`;
     });
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -269,6 +296,7 @@ export default function App() {
             setEditingItem(null);
             setIsModalOpen(true);
           }}
+          onOpenScanner={() => setIsScannerOpen(true)}
           onExportCSV={handleExportCSV}
           onPrintAudit={handlePrintAudit}
           onLoadSamples={handleLoadSamples}
@@ -307,7 +335,10 @@ export default function App() {
           />
 
           {/* Quick Registration Form */}
-          <QuickAddForm onAddItem={handleAddItem} />
+          <QuickAddForm 
+            onAddItem={handleAddItem}
+            onOpenScanner={() => setIsScannerOpen(true)}
+          />
 
           {/* Filter Bar with Live Search & Sort */}
           <FilterBar
@@ -320,6 +351,7 @@ export default function App() {
             sortBy={sortBy}
             onSortByChange={setSortBy}
             itemCount={filteredItems.length}
+            onOpenScanner={() => setIsScannerOpen(true)}
           />
 
           {/* High-Density Dental Stock Table */}
@@ -365,6 +397,15 @@ export default function App() {
         }}
         onSave={handleSaveModalItem}
         initialItem={editingItem}
+      />
+
+      {/* Barcode & QR Code Scanner Modal */}
+      <BarcodeScannerModal
+        isOpen={isScannerOpen}
+        onClose={() => setIsScannerOpen(false)}
+        inventory={items}
+        onAdjustQty={handleAdjustQty}
+        onRegisterNewItemWithBarcode={handleRegisterNewItemWithBarcode}
       />
 
       {/* Toast Notification */}

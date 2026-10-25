@@ -11,7 +11,8 @@ import {
   Layers, 
   MapPin, 
   Hash, 
-  AlertTriangle 
+  AlertTriangle,
+  QrCode
 } from 'lucide-react';
 import { DentalInventoryItem } from '../types/inventory';
 
@@ -99,6 +100,12 @@ export const InventoryTable: React.FC<InventoryTableProps> = ({
                         <span className="inline-flex items-center gap-0.5 font-mono text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
                           <Hash className="w-2.5 h-2.5 text-slate-400" />
                           {item.lotNumber}
+                        </span>
+                      )}
+                      {item.barcode && (
+                        <span className="inline-flex items-center gap-0.5 font-mono text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-200/50">
+                          <QrCode className="w-2.5 h-2.5 text-sky-500" />
+                          {item.barcode}
                         </span>
                       )}
                       {item.location && (

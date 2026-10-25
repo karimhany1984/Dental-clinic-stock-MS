@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Save, Layers, Calendar, MapPin, Hash, FileText } from 'lucide-react';
+import { X, Save, Layers, Calendar, MapPin, Hash, FileText, QrCode } from 'lucide-react';
 import { DentalCategory, DentalInventoryItem, ItemUnit } from '../types/inventory';
 
 interface ItemModalProps {
@@ -34,6 +34,7 @@ export const ItemModal: React.FC<ItemModalProps> = ({
   const [category, setCategory] = useState<DentalCategory>('حشوات وترميم');
   const [unit, setUnit] = useState<ItemUnit>('عبوة');
   const [lotNumber, setLotNumber] = useState('');
+  const [barcode, setBarcode] = useState('');
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
 
@@ -46,6 +47,7 @@ export const ItemModal: React.FC<ItemModalProps> = ({
       setCategory(initialItem.category || 'حشوات وترميم');
       setUnit(initialItem.unit || 'عبوة');
       setLotNumber(initialItem.lotNumber || '');
+      setBarcode(initialItem.barcode || '');
       setLocation(initialItem.location || '');
       setNotes(initialItem.notes || '');
     } else {
@@ -59,6 +61,7 @@ export const ItemModal: React.FC<ItemModalProps> = ({
       setCategory('حشوات وترميم');
       setUnit('عبوة');
       setLotNumber('');
+      setBarcode('');
       setLocation('');
       setNotes('');
     }
@@ -78,6 +81,7 @@ export const ItemModal: React.FC<ItemModalProps> = ({
       category,
       unit,
       lotNumber: lotNumber.trim() || undefined,
+      barcode: barcode.trim() || undefined,
       location: location.trim() || undefined,
       notes: notes.trim() || undefined,
       lastUpdated: new Date().toISOString(),
@@ -206,7 +210,21 @@ export const ItemModal: React.FC<ItemModalProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Barcode */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-600 mb-1 flex items-center gap-1">
+                <QrCode className="w-3.5 h-3.5 text-slate-400" /> الباركود / QR
+              </label>
+              <input
+                type="text"
+                value={barcode}
+                onChange={(e) => setBarcode(e.target.value)}
+                placeholder="رمز الباركود للمادة"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 outline-none transition font-mono"
+              />
+            </div>
+
             {/* Lot / Batch # */}
             <div>
               <label className="block text-xs font-semibold text-slate-600 mb-1 flex items-center gap-1">
@@ -230,7 +248,7 @@ export const ItemModal: React.FC<ItemModalProps> = ({
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="مثال: ثلاجة العيادة الرئيسية"
+                placeholder="مثال: ثلاجة العيادة"
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 outline-none transition"
               />
             </div>

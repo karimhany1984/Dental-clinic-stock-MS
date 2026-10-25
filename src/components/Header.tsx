@@ -8,13 +8,15 @@ import {
   Sparkles, 
   RotateCcw,
   Smartphone,
-  ShieldCheck
+  ShieldCheck,
+  QrCode
 } from 'lucide-react';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
 interface HeaderProps {
   onOpenAddModal: () => void;
+  onOpenScanner: () => void;
   onExportCSV: () => void;
   onPrintAudit: () => void;
   onLoadSamples: () => void;
@@ -24,6 +26,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenAddModal,
+  onOpenScanner,
   onExportCSV,
   onPrintAudit,
   onLoadSamples,
@@ -126,6 +129,17 @@ export const Header: React.FC<HeaderProps> = ({
                 <Download className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">تصدير Excel</span>
                 <span className="sm:hidden">تصدير</span>
+              </button>
+
+              {/* Barcode & QR Code Scanner Button */}
+              <button
+                onClick={onOpenScanner}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-sky-50 hover:text-sky-700 active:scale-[0.98] rounded-xl border border-slate-200 transition-all shadow-xs cursor-pointer"
+                title="مسح باركود أو كود QR بكاميرا الهاتف"
+              >
+                <QrCode className="w-3.5 h-3.5 text-sky-600" />
+                <span className="hidden sm:inline">مسح باركود / QR</span>
+                <span className="sm:hidden">مسح</span>
               </button>
 
               {/* Add New Item Button */}
