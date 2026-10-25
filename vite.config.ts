@@ -6,6 +6,7 @@ import {VitePWA} from 'vite-plugin-pwa';
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [
       react(),
       tailwindcss(),
@@ -13,7 +14,7 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['icon.svg'],
         manifest: {
-          id: '/',
+          id: './',
           name: 'نظام إدارة المخزون الطبي للأسنان | DentaStock',
           short_name: 'مخزون الأسنان',
           description: 'نظام متقدم لإدارة وتتبع المخزون الطبي وتواريخ صلاحية المواد والأدوية لعيادات الأسنان بدون إنترنت.',
@@ -22,17 +23,17 @@ export default defineConfig(() => {
           display: 'standalone',
           dir: 'rtl',
           lang: 'ar',
-          start_url: '/',
-          scope: '/',
+          start_url: './',
+          scope: './',
           icons: [
             {
-              src: '/icon.svg',
+              src: 'icon.svg',
               sizes: '192x192 512x512',
               type: 'image/svg+xml',
               purpose: 'any',
             },
             {
-              src: '/icon.svg',
+              src: 'icon.svg',
               sizes: '512x512',
               type: 'image/svg+xml',
               purpose: 'maskable',
