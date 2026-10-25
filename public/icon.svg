@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0369a1" />
+      <stop offset="100%" stop-color="#075985" />
+    </linearGradient>
+    <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f0f9ff" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background with rounded corners (compliant for PWA maskable safe zone) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Subtle background grid pattern -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2" />
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="2" />
+
+  <!-- Tooth & Medical Inventory Emblem in Center Safe Zone -->
+  <g filter="url(#glow)">
+    <!-- Stylized Tooth Path -->
+    <path d="M 256 120 
+             C 210 120 160 145 160 200 
+             C 160 250 175 285 195 330 
+             C 210 365 220 392 235 392 
+             C 246 392 250 350 256 325 
+             C 262 350 266 392 277 392 
+             C 292 392 302 365 317 330 
+             C 337 285 352 250 352 200 
+             C 352 145 302 120 256 120 Z" 
+          fill="url(#toothGrad)" />
+
+    <!-- Medical Plus Badge in Center -->
+    <circle cx="256" cy="225" r="38" fill="#0284c7" />
+    <path d="M 256 202 L 256 248 M 233 225 L 279 225" stroke="#ffffff" stroke-width="9" stroke-linecap="round" />
+  </g>
+
+  <!-- Inventory Boxes Symbol -->
+  <g transform="translate(340, 340) scale(0.65)" filter="url(#glow)">
+    <circle cx="60" cy="60" r="54" fill="#38bdf8" />
+    <!-- Mini box stacked -->
+    <rect x="36" y="44" width="48" height="34" rx="6" fill="#0c4a6e" />
+    <path d="M 36 54 L 84 54" stroke="#38bdf8" stroke-width="3" />
+    <rect x="46" y="30" width="28" height="14" rx="3" fill="#0284c7" />
+  </g>
+</svg>

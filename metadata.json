@@ -1,0 +1,6 @@
+{
+  "name": "نظام إدارة المخزون الطبي للأسنان | DentaStock",
+  "description": "نظام PWA متقدم لإدارة وتتبع المخزون الطبي وتواريخ صلاحية المواد والأدوية لعيادات الأسنان بدون إنترنت.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
